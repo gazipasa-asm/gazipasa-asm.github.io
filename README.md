@@ -1,6 +1,6 @@
 # Gazipaşa Aile Sağlığı Merkezi Web Sitesi
 
-Bu proje, [Gazipaşa Aile Sağlığı Merkezi](https://gazipasaasm.com) için hazırlanmış, modern ve erişilebilir bir web sitesidir. Ziyaretçiler, kurum hakkında bilgi alabilir, kadroyu inceleyebilir, duyuruları takip edebilir, galeriye göz atabilir ve iletişim kurabilirler.
+Bu proje, [Gazipaşa Aile Sağlığı Merkezi](https://gazipasaasm02.com) için hazırlanmış, modern ve erişilebilir bir web sitesidir. Ziyaretçiler, kurum hakkında bilgi alabilir, kadroyu inceleyebilir, duyuruları takip edebilir, galeriye göz atabilir ve iletişim kurabilirler.
 
 ## Özellikler
 
@@ -48,7 +48,7 @@ Bu proje, [Gazipaşa Aile Sağlığı Merkezi](https://gazipasaasm.com) için ha
 
 ## Canlı Site
 
--   [https://gazipasaasm.com](https://gazipasaasm.com)
+-   [https://gazipasaasm02.com](https://gazipasaasm02.com)
 
 ## Proje Yapısı
 

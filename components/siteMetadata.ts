@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 const siteMetadata: Metadata = {
-    metadataBase: new URL('https://gazipasaasm.com'),
+    metadataBase: new URL('https://gazipasaasm02.com'),
     title: {
         default: 'Gazipaşa ASM',
         template: '%s | Gazipaşa ASM',
@@ -30,15 +30,15 @@ const siteMetadata: Metadata = {
     authors: [
         {
             name: 'Gazipaşa Aile Sağlığı Merkezi',
-            url: 'https://gazipasaasm.com',
+            url: 'https://gazipasaasm02.com',
         },
     ],
     creator: 'Gazipaşa Aile Sağlığı Merkezi',
     publisher: 'Gazipaşa Aile Sağlığı Merkezi',
     alternates: {
-        canonical: 'https://gazipasaasm.com',
+        canonical: 'https://gazipasaasm02.com',
         languages: {
-            'tr-TR': 'https://gazipasaasm.com',
+            'tr-TR': 'https://gazipasaasm02.com',
         },
     },
     icons: {
@@ -79,7 +79,7 @@ const siteMetadata: Metadata = {
     viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
     openGraph: {
         type: 'website',
-        url: 'https://gazipasaasm.com',
+        url: 'https://gazipasaasm02.com',
         title: 'Gazipaşa ASM',
         description:
             "Gazipaşa Aile Sağlığı Merkezi resmi web sitesi. Doktor ve personel kadrosu, çalışma programı, duyurular, galeri ve iletişim bilgileri. Adana Gazipaşa Mahallesi'nde hizmetinizdeyiz.",
