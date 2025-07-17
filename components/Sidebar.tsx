@@ -4,12 +4,23 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+} from '@/components/ui/sheet'
+import { Button } from '@/components/ui/button'
+import { PanelLeft } from 'lucide-react'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 const Sidebar = () => {
     const [expandedSections, setExpandedSections] = useState<string[]>([
         'links',
         'quick-access',
     ])
+    const [openMobile, setOpenMobile] = useState(false)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024
 
     const toggleSection = (section: string) => {
         setExpandedSections((prev) =>
@@ -54,169 +65,193 @@ const Sidebar = () => {
         },
     ]
 
-    return (
-        <aside className="hidden lg:block sticky right-0 mt-4 mr-2 top-16 lg:top-20 w-80 xl:w-96 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-white shadow-lg border-l border-gray-200 overflow-y-auto">
-            <div className="p-4 xl:p-6 space-y-6">
-                {/* Useful Links Section */}
-                <div className="bg-gray-50 rounded-lg p-4">
-                    <button
-                        onClick={() => toggleSection('links')}
-                        className="w-full flex items-center justify-between text-left focus-visible"
-                        aria-expanded={expandedSections.includes('links')}
-                    >
-                        <h3 className="heading-3 text-gray-800">
-                            Faydalı Bağlantılar
-                        </h3>
-                        {expandedSections.includes('links') ? (
-                            <ChevronUp className="w-5 h-5 text-gray-600" />
-                        ) : (
-                            <ChevronDown className="w-5 h-5 text-gray-600" />
-                        )}
-                    </button>
-
-                    {expandedSections.includes('links') && (
-                        <ul className="mt-4 space-y-2">
-                            {usefulLinks.map((link, index) => (
-                                <li key={index}>
-                                    <Link
-                                        href={link.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded-md transition-all duration-200 focus-visible group"
-                                    >
-                                        <ExternalLink className="w-4 h-4 mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-200" />
-                                        <span className="text-sm font-medium">
-                                            {link.title}
-                                        </span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+    // Sidebar content as a function for reuse
+    const sidebarContent = (
+        <div className="p-4 xl:p-6 space-y-6 overflow-y-auto max-h-[calc(100vh)]">
+            {/* Useful Links Section */}
+            <div className="bg-gray-50 rounded-lg p-4">
+                <button
+                    onClick={() => toggleSection('links')}
+                    className="w-full flex items-center justify-between text-left focus-visible"
+                    aria-expanded={expandedSections.includes('links')}
+                >
+                    <h3 className="heading-3 text-gray-800">
+                        Faydalı Bağlantılar
+                    </h3>
+                    {expandedSections.includes('links') ? (
+                        <ChevronUp className="w-5 h-5 text-gray-600" />
+                    ) : (
+                        <ChevronDown className="w-5 h-5 text-gray-600" />
                     )}
-                </div>
+                </button>
 
-                {/* Quick Access Section */}
-                <div className="bg-gray-50 rounded-lg p-4">
-                    <button
-                        onClick={() => toggleSection('quick-access')}
-                        className="w-full flex items-center justify-between text-left focus-visible"
-                        aria-expanded={expandedSections.includes(
-                            'quick-access'
-                        )}
-                    >
-                        <h3 className="heading-3 text-gray-800">
-                            Hızlı Erişim
-                        </h3>
-                        {expandedSections.includes('quick-access') ? (
-                            <ChevronUp className="w-5 h-5 text-gray-600" />
-                        ) : (
-                            <ChevronDown className="w-5 h-5 text-gray-600" />
-                        )}
-                    </button>
-
-                    {expandedSections.includes('quick-access') && (
-                        <div className="mt-4 space-y-3">
-                            {imageLinks.map((item, index) => (
+                {expandedSections.includes('links') && (
+                    <ul className="mt-4 space-y-2">
+                        {usefulLinks.map((link, index) => (
+                            <li key={index}>
                                 <Link
-                                    key={index}
-                                    href={item.url}
+                                    href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block group focus-visible"
+                                    className="flex items-center text-blue-600 hover:text-blue-800 hover:bg-blue-50 p-2 rounded-md transition-all duration-200 focus-visible group"
                                 >
-                                    <div className="card p-3 group-hover:shadow-md transition-all duration-200 group-hover:scale-[1.02]">
-                                        <div className="flex items-start space-x-3">
-                                            <div className="relative w-12 h-12 flex-shrink-0">
-                                                <Image
-                                                    src={
-                                                        item.image ||
-                                                        '/placeholder.svg'
-                                                    }
-                                                    alt={item.title}
-                                                    fill
-                                                    className="object-cover rounded-md"
-                                                />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600 transition-colors duration-200 mb-1">
-                                                    {item.title}
-                                                </p>
-                                                <p className="text-xs text-gray-600 text-ellipsis-2">
-                                                    {item.description}
-                                                </p>
-                                            </div>
-                                            <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors duration-200 flex-shrink-0 mt-1" />
-                                        </div>
-                                    </div>
+                                    <ExternalLink className="w-4 h-4 mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-200" />
+                                    <span className="text-sm font-medium">
+                                        {link.title}
+                                    </span>
                                 </Link>
-                            ))}
-                        </div>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+
+            {/* Quick Access Section */}
+            <div className="bg-gray-50 rounded-lg p-4">
+                <button
+                    onClick={() => toggleSection('quick-access')}
+                    className="w-full flex items-center justify-between text-left focus-visible"
+                    aria-expanded={expandedSections.includes('quick-access')}
+                >
+                    <h3 className="heading-3 text-gray-800">Hızlı Erişim</h3>
+                    {expandedSections.includes('quick-access') ? (
+                        <ChevronUp className="w-5 h-5 text-gray-600" />
+                    ) : (
+                        <ChevronDown className="w-5 h-5 text-gray-600" />
                     )}
-                </div>
+                </button>
 
-                {/* Emergency Contact */}
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <h3 className="heading-3 text-red-800 mb-3">Acil Durum</h3>
-                    <div className="space-y-2">
-                        <a
-                            href="tel:112"
-                            className="flex items-center justify-between p-3 bg-red-100 hover:bg-red-200 rounded-md transition-colors duration-200 focus-visible group"
-                        >
-                            <div>
-                                <p className="font-bold text-red-800">112</p>
-                                <p className="text-xs text-red-600">
-                                    Acil Servis
-                                </p>
-                            </div>
-                            <div className="text-red-600 group-hover:scale-110 transition-transform duration-200">
-                                📞
-                            </div>
-                        </a>
-                        <a
-                            href="tel:03224547733"
-                            className="flex items-center justify-between p-3 bg-blue-100 hover:bg-blue-200 rounded-md transition-colors duration-200 focus-visible group"
-                        >
-                            <div>
-                                <p className="font-bold text-blue-800">
-                                    0322 454 77 33
-                                </p>
-                                <p className="text-xs text-blue-600">
-                                    Randevu Hattı
-                                </p>
-                            </div>
-                            <div className="text-blue-600 group-hover:scale-110 transition-transform duration-200">
-                                📞
-                            </div>
-                        </a>
+                {expandedSections.includes('quick-access') && (
+                    <div className="mt-4 space-y-3">
+                        {imageLinks.map((item, index) => (
+                            <Link
+                                key={index}
+                                href={item.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block group focus-visible"
+                            >
+                                <div className="card p-3 group-hover:shadow-md transition-all duration-200 group-hover:scale-[1.02]">
+                                    <div className="flex items-start space-x-3">
+                                        <div className="relative w-12 h-12 flex-shrink-0">
+                                            <Image
+                                                src={
+                                                    item.image ||
+                                                    '/placeholder.svg'
+                                                }
+                                                alt={item.title}
+                                                fill
+                                                className="object-cover rounded-md"
+                                            />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600 transition-colors duration-200 mb-1">
+                                                {item.title}
+                                            </p>
+                                            <p className="text-xs text-gray-600 text-ellipsis-2">
+                                                {item.description}
+                                            </p>
+                                        </div>
+                                        <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors duration-200 flex-shrink-0 mt-1" />
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
                     </div>
-                </div>
+                )}
+            </div>
 
-                {/* Working Hours */}
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <h3 className="heading-3 text-green-800 mb-3">
-                        Çalışma Saatleri
-                    </h3>
-                    <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                            <span className="text-green-700">
-                                Pazartesi - Cuma
-                            </span>
-                            <span className="font-medium text-green-800">
-                                08:00 - 17:00
-                            </span>
+            {/* Emergency Contact */}
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <h3 className="heading-3 text-red-800 mb-3">Acil Durum</h3>
+                <div className="space-y-2">
+                    <a
+                        href="tel:112"
+                        className="flex items-center justify-between p-3 bg-red-100 hover:bg-red-200 rounded-md transition-colors duration-200 focus-visible group"
+                    >
+                        <div>
+                            <p className="font-bold text-red-800">112</p>
+                            <p className="text-xs text-red-600">Acil Servis</p>
                         </div>
-                        <div className="flex justify-between">
-                            <span className="text-green-700">
-                                Cumartesi - Pazar
-                            </span>
-                            <span className="font-medium text-red-600">
-                                Kapalı
-                            </span>
+                        <div className="text-red-600 group-hover:scale-110 transition-transform duration-200">
+                            📞
                         </div>
+                    </a>
+                    <a
+                        href="tel:03224547733"
+                        className="flex items-center justify-between p-3 bg-blue-100 hover:bg-blue-200 rounded-md transition-colors duration-200 focus-visible group"
+                    >
+                        <div>
+                            <p className="font-bold text-blue-800">
+                                0322 454 77 33
+                            </p>
+                            <p className="text-xs text-blue-600">
+                                Randevu Hattı
+                            </p>
+                        </div>
+                        <div className="text-blue-600 group-hover:scale-110 transition-transform duration-200">
+                            📞
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            {/* Working Hours */}
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h3 className="heading-3 text-green-800 mb-3">
+                    Çalışma Saatleri
+                </h3>
+                <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                        <span className="text-green-700">Pazartesi - Cuma</span>
+                        <span className="font-medium text-green-800">
+                            08:00 - 17:00
+                        </span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-green-700">
+                            Cumartesi - Pazar
+                        </span>
+                        <span className="font-medium text-red-600">Kapalı</span>
                     </div>
                 </div>
             </div>
-        </aside>
+        </div>
+    )
+
+    // Mobil sheet için başlık ekliyoruz
+    const mobileSidebarContent = (
+        <>
+            <SheetHeader>
+                <SheetTitle></SheetTitle>
+            </SheetHeader>
+            {sidebarContent}
+        </>
+    )
+
+    return (
+        <>
+            {/* Mobile: Hamburger button and Sheet */}
+            <div className="lg:hidden fixed bottom-6 right-6 z-50">
+                <Button
+                    variant="outline"
+                    size="icon"
+                    aria-label="Menüyü Aç"
+                    onClick={() => setOpenMobile(true)}
+                >
+                    <PanelLeft className="w-7 h-7" />
+                </Button>
+                <Sheet open={openMobile} onOpenChange={setOpenMobile}>
+                    <SheetContent side="right" className="p-0 w-80 max-w-full">
+                        {mobileSidebarContent}
+                    </SheetContent>
+                </Sheet>
+            </div>
+            {/* Desktop: Sidebar */}
+            <aside className="hidden lg:block sticky right-0 mt-4 mr-2 top-16 lg:top-20 w-80 xl:w-96 h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] bg-white shadow-lg border-l border-gray-200 overflow-y-auto">
+                {sidebarContent}
+            </aside>
+        </>
     )
 }
 

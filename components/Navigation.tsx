@@ -80,52 +80,55 @@ const Navigation = () => {
                 role="navigation"
                 aria-label="Ana navigasyon"
             >
-                <div className="responsive-container">
+                <div className="max-w-screen-xl mx-auto px-2 sm:px-4">
                     <div className="flex justify-between items-center h-16 lg:h-20">
                         {/* Logo */}
                         <Link
                             href="/"
-                            className="flex items-center space-x-2 sm:space-x-3 focus-visible flex-shrink-0"
+                            className="flex items-center gap-2 sm:gap-3 focus-visible flex-shrink-0 min-w-0"
                             aria-label="Gazipaşa ASM Ana Sayfa"
                         >
-                            <div className="relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex-shrink-0">
+                            <div className="relative w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 flex-shrink-0">
                                 <Image
                                     src="/logo.jpg"
                                     alt="Gazipaşa ASM Logo"
                                     fill
                                     className="rounded-full object-cover"
                                     priority
+                                    sizes="(max-width: 640px) 2.5rem, (max-width: 1024px) 3rem, 3.5rem"
                                 />
                             </div>
-                            <div className="flex flex-col">
-                                <span className="text-base sm:text-lg lg:text-xl font-bold text-blue-600 leading-tight">
+                            <div className="flex flex-col min-w-0">
+                                <span className="text-base sm:text-lg lg:text-xl font-bold text-blue-600 leading-tight truncate">
                                     Gazipaşa ASM
                                 </span>
-                                <span className="text-xs sm:text-sm text-gray-600 leading-tight hidden sm:block">
+                                <span className="text-xs sm:text-sm text-gray-600 leading-tight hidden sm:block truncate">
                                     Aile Sağlığı Merkezi
                                 </span>
                             </div>
                         </Link>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-                            {navItems.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={`nav-link whitespace-nowrap ${
-                                        pathname === item.href
-                                            ? 'text-blue-600 bg-blue-50 font-semibold'
-                                            : ''
-                                    }`}
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
+                        <div className="hidden lg:flex items-center flex-1 justify-center min-w-0">
+                            <div className="flex flex-wrap items-center gap-x-1 gap-y-1 xl:gap-x-2">
+                                {navItems.map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className={`nav-link whitespace-nowrap px-2 py-1 rounded-md transition-colors duration-200 ${
+                                            pathname === item.href
+                                                ? 'text-blue-600 bg-blue-50 font-semibold'
+                                                : 'hover:bg-gray-100 text-gray-700'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
 
                         {/* Emergency Contact - Desktop */}
-                        <div className="hidden xl:flex items-center space-x-4">
+                        <div className="hidden xl:flex items-center space-x-4 flex-shrink-0">
                             <div className="text-right">
                                 <p className="text-xs text-gray-600">
                                     Acil Durum
@@ -159,12 +162,12 @@ const Navigation = () => {
                         >
                             {isOpen ? (
                                 <X
-                                    className="block h-6 w-6"
+                                    className="block h-7 w-7"
                                     aria-hidden="true"
                                 />
                             ) : (
                                 <Menu
-                                    className="block h-6 w-6"
+                                    className="block h-7 w-7"
                                     aria-hidden="true"
                                 />
                             )}
@@ -185,21 +188,28 @@ const Navigation = () => {
                 <div
                     ref={mobileMenuRef}
                     id="mobile-menu"
-                    className={`lg:hidden fixed top-16 left-0 right-0 bg-white border-t border-gray-200 shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+                    className={`lg:hidden fixed top-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
                         isOpen ? 'translate-y-0' : '-translate-y-full'
                     }`}
-                    style={{ maxHeight: 'calc(100vh - 4rem)' }}
+                    style={{
+                        maxHeight: '100vh',
+                        marginTop: '0',
+                        paddingTop: '4rem',
+                    }}
                 >
-                    <div className="overflow-y-auto">
+                    <div
+                        className="overflow-y-auto"
+                        style={{ maxHeight: 'calc(100vh - 4rem)' }}
+                    >
                         <div className="px-4 py-2 space-y-1">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className={`mobile-nav-link ${
+                                    className={`mobile-nav-link block w-full text-left px-3 py-2 rounded-md transition-colors duration-200 ${
                                         pathname === item.href
                                             ? 'text-blue-600 bg-blue-50 font-semibold'
-                                            : ''
+                                            : 'hover:bg-gray-100 text-gray-700'
                                     }`}
                                     onClick={() => setIsOpen(false)}
                                 >
@@ -216,7 +226,7 @@ const Navigation = () => {
                             <div className="grid grid-cols-2 gap-4">
                                 <a
                                     href="tel:112"
-                                    className="flex flex-col items-center p-3 bg-red-50 rounded-lg hover:bg-red-100 focus-visible transition-colors duration-200"
+                                    className="flex flex-col items-center p-3 bg-red-50 rounded-lg hover:bg-red-100 focus-visible transition-colors duration-200 w-full"
                                 >
                                     <span className="text-lg font-bold text-red-600">
                                         112
@@ -227,7 +237,7 @@ const Navigation = () => {
                                 </a>
                                 <a
                                     href="tel:03224547733"
-                                    className="flex flex-col items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 focus-visible transition-colors duration-200"
+                                    className="flex flex-col items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 focus-visible transition-colors duration-200 w-full"
                                 >
                                     <span className="text-sm font-bold text-blue-600">
                                         0322 454 77 33
