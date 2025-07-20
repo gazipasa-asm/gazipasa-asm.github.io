@@ -37,7 +37,7 @@ export default function Team() {
             image: '',
         },
         {
-            name: 'Fatma Büşra YAKIŞIR',
+            name: 'Ezgi ŞAHİN',
             title: 'Hemşire',
             specialization: 'Sağlık Hizmetleri',
             image: '',
