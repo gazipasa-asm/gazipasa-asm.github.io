@@ -72,7 +72,7 @@ const Footer = () => {
                                     <address className="text-gray-300 not-italic">
                                         Gazipaşa Mahallesi, Aile Sağlığı Merkezi
                                         <br />
-                                        01140 Gazipaşa/ADANA
+                                        01140 Seyhan/ADANA
                                     </address>
                                 </div>
                             </div>

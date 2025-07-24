@@ -86,7 +86,7 @@ export default function Contact() {
                                             Gazipaşa Mahallesi, Aile Sağlığı
                                             Merkezi
                                             <br />
-                                            01140 Gazipaşa/ADANA
+                                            01140 Seyhan/ADANA
                                         </p>
                                     </div>
                                 </div>
