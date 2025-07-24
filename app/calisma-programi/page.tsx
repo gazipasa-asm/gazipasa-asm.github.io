@@ -1,10 +1,5 @@
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-    title: 'Çalışma Programı - Gazipaşa ASM',
-    description:
-        'Gazipaşa Aile Sağlığı Merkezi doktor çalışma programı ve randevu saatleri',
-}
+'use client'
+import { useState, useCallback, useEffect } from 'react'
 
 export default function Schedule() {
     const schedule = [
@@ -35,58 +30,63 @@ export default function Schedule() {
         },
     ]
 
+    // Modal için state
+    const [modalOpen, setModalOpen] = useState(false)
+
+    // ESC tuşu ile kapama
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            setModalOpen(false)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (modalOpen) {
+            window.addEventListener('keydown', handleKeyDown)
+        } else {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [modalOpen, handleKeyDown])
+
     return (
         <div className="p-6">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
-                    Çalışma Programı
-                </h1>
-
-                <div className="card overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead className="bg-blue-600 text-white">
-                                <tr>
-                                    <th className="px-6 py-4 text-left font-semibold">
-                                        Gün
-                                    </th>
-                                    <th className="px-6 py-4 text-left font-semibold">
-                                        Sabah (08:00-12:00)
-                                    </th>
-                                    <th className="px-6 py-4 text-left font-semibold">
-                                        Öğleden Sonra (13:00-17:00)
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
-                                {schedule.map((day, index) => (
-                                    <tr
-                                        key={index}
-                                        className="hover:bg-gray-50 transition-colors duration-200"
-                                    >
-                                        <td className="px-6 py-4 font-medium text-gray-900">
-                                            {day.day}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div>
-                                                <p className="font-medium text-gray-900">
-                                                    {day.morning.doctor}
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div>
-                                                <p className="font-medium text-gray-900">
-                                                    {day.afternoon.doctor}
-                                                </p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                {/* Çalışma saatleri görseli */}
+                <div className="card mt-4 overflow-hidden">
+                    <div className="w-full flex justify-center">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+                            Çalışma Programımız
+                        </h2>
                     </div>
+                    <img
+                        src="/calismasaatleri.jpg"
+                        alt="Çalışma Saatleri Görseli"
+                        className="w-full h-auto rounded-lg object-cover cursor-pointer"
+                        onClick={() => setModalOpen(true)}
+                    />
                 </div>
+
+                {/* Modal */}
+                {modalOpen && (
+                    <div
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+                        onClick={() => setModalOpen(false)}
+                    >
+                        <div
+                            className="max-w-3xl w-full p-4 flex justify-center"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <img
+                                src="/calismasaatleri.jpg"
+                                alt="Çalışma Saatleri Büyük Görsel"
+                                className="rounded-lg max-h-[80vh] w-auto h-auto shadow-2xl border-4 border-white"
+                            />
+                        </div>
+                    </div>
+                )}
 
                 <div className="mt-8 card p-6">
                     <h2 className="text-xl font-semibold mb-4 text-gray-800">
