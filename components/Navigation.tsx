@@ -140,6 +140,8 @@ const Navigation = () => {
                                     112
                                 </a>
                             </div>
+                            {/* Ayırıcı çubuk */}
+                            <div className="h-8 w-px bg-gradient-to-b from-gray-400 via-gray-700 to-black mx-2" />
                             <div className="text-right">
                                 <p className="text-xs text-gray-600">Randevu</p>
                                 <a
